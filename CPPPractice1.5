@@ -1,0 +1,59 @@
+//Pointers
+struct Books {
+    int a;
+    int b;
+};
+
+int main() {
+    std::cout << "Hello World!\n";
+    
+    //pointer to var
+    int a = 10;
+    int* p = &a;
+    
+    
+    cout << "Int is " << a << endl;
+    cout << "Value of p is " << p << endl;
+    cout << "Value of *p is " << *p << endl;
+    cout << "Value of &a is " << &a << endl;
+    
+    
+    //array declaration itself is pointer
+    int arr[2] = {1,2};
+    p = arr;
+    cout << "Arr is " << *arr << endl;
+    cout << "p is " << p << endl;
+    cout << "*p is " << *p << endl;
+    cout << "*p +1 is " << *(p + 1) << endl;
+    
+    //struct and pointer
+    Books book1;
+    book1.a = 1;
+    book1.b = 2;
+    Books *book2;
+    book2 = &book1;
+    
+    cout << "*book2->a does not work but book2->a works " << book2->a << endl;
+    cout << "*Book2->a is " << book2->a << endl;
+    cout << "*Book2->b is " << book2->b << endl;
+    
+    //Look at char in tutorialsPoint
+    int    i;
+    double d;
+ 
+   // declare reference variables
+   int&    r = i;
+   double& s = d;
+   
+   i = 5;
+   r =6;
+    cout << "Value of &i : " << &i << endl;
+    
+    cout << "Value of i reference : " << &r  << endl;
+ 
+   d = 11.7;
+   cout << "Value of d : " << d << endl;
+   cout << "Value of d reference : " << s  << endl;
+   
+
+}
