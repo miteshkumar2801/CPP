@@ -1,0 +1,117 @@
+ void showpq(priority_queue<int>& pq) {
+     cout << endl;
+        while (!pq.empty()) {
+            cout << pq.top();
+            pq.pop();
+            cout << endl;
+        }
+        
+ }
+
+void showpqmin (priority_queue<int,vector<int>,greater<int>>& pq) {
+    cout << endl;
+    while (!pq.empty()) {
+        cout << pq.top();
+        pq.pop();
+        cout << endl;
+    }
+}
+
+int main() {
+    std::cout << "Hello World!\n";
+    //Pair 
+    pair <char,int> p1;
+    pair p2(5,'G');
+    pair p3(5,4);
+    
+    p1.first = 'C';
+    p1.second = 10;
+    cout << p1.first << endl;
+    cout << p1.second << endl;
+    
+    cout << p2.first << endl;
+    cout << p2.second << endl;
+    
+    cout << p3.first << endl;
+    cout << p3.second << endl;
+    
+    vector<int> v1;
+    for (int i = 0; i <5; i++) {
+        v1.push_back(i);
+    }
+    
+    //Iterator pointer
+    for (auto i= v1.begin(); i != v1.end(); i++ ) {
+        cout << *i;
+        
+    }
+    
+    cout << endl;
+    for (int i =0 ; i < v1.size(); i++) {
+        cout << v1[i];
+        
+    }
+    cout << endl;
+    
+    //vector of vector
+    /*
+    vector<vector<int>> v2;
+    for (int i = 0; i< 5; i++) {
+        v2.push_back(0);
+    }
+    
+    for (int j = 0; j< v2.size(); j++) {
+        cout << v2[j];
+    }
+    */
+    
+    // Passing vector in func
+    //https://www.geeksforgeeks.org/passing-vector-function-cpp/
+    
+    //Map -- Unordered Map
+    //https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/
+    unordered_map<string, int> map1;
+    map1["a"] = 1;
+    map1["b"] = 2;
+    map1["c"] = 3;
+    
+    for (auto x : map1) {
+        cout << x.first << ":: " << x.second;
+        cout << endl;
+    }
+    //Find if key exists in unordered map
+    if (map1.find("a") != map1.end()) {
+        cout << map1["a"] << endl;
+    }
+    
+    //Unordered Set
+    //https://www.geeksforgeeks.org/unordered_set-in-cpp-stl/
+    unordered_set<string> setstr;
+    setstr.insert("c");
+    setstr.insert("d");
+    setstr.insert("e");
+    
+    if (setstr.find("e") != setstr.end()) {
+        cout <<  "Found e";
+        
+    }
+     
+ 
+    //Priority Queue
+    // Max Heap -- By default
+    priority_queue<int> pq;
+    pq.push(10);
+    pq.push(20);
+    pq.push(30);
+    
+ 
+    
+    showpq(pq);
+    
+    // Min Heap
+    priority_queue<int,vector<int>, greater<int>> pqmin;
+    pqmin.push(10);
+    pqmin.push(20);
+    pqmin.push(30);
+    showpqmin(pqmin);
+}
