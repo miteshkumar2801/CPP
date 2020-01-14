@@ -1,0 +1,71 @@
+//Struct Practice
+struct Books {
+  char title[50];
+    char author[50];
+    char subject[100];
+    int book_id;
+    
+};
+
+void printBook(struct Books *book) {
+    cout << "Book Title " << book->title << endl;
+    cout << "Book Author " << book->author << endl;
+    cout << "Book ID " << book->book_id << endl;
+}
+
+
+void changeStr(struct Books &b) {
+    cout << "Book Title" << b.title << endl;
+    b.book_id = 5;
+    cout << "Book id" << b.book_id << endl;
+    
+}
+int main() {
+    std::cout << "Hello World!\n";
+    /*Struct */
+    Books Book1;
+    Books *Book2;
+    Book2 = &Book1;
+    
+    //Book 1 spec
+    strcpy(Book1.title,"Book1Title");
+    strcpy(Book1.author,"Book1Author");
+    strcpy(Book1.subject,"Book1Subject");
+    Book1.book_id = 1;
+    
+    printBook(&Book1);
+    cout << "Book2 ->title " << Book2->title << endl;
+    
+    changeStr(Book1);
+    printBook(&Book1);
+    
+    /*Vector*/
+    vector<int> vec;
+    int i;
+    cout << "vector size = " << vec.size() << endl;
+    
+    for (i = 0; i< 5; i++) {
+        vec.push_back(i);   
+    }
+    cout << "Extended vec size" << vec.size() << endl;
+    
+    //Iterator to access val
+    vector<int>::iterator v = vec.begin();
+    while (v != vec.end()) {
+        cout << "value of v = " << *v << endl;
+        v++;
+    }
+    
+    //vector of char
+    vector<char> vecCh;
+    for (int i =0; i < 5; i++) {
+        vecCh.push_back('a');
+    }
+    for (auto i : vecCh) {
+        cout << "Using auto " << i << endl;
+    }
+    
+    for (auto it = vecCh.begin(); it != vecCh.end(); it++) {
+        cout << "vecC using auto " << *it << endl;
+    }
+}
