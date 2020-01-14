@@ -1,0 +1,43 @@
+//Class Basics
+
+#include<iostream>
+using namespace std;
+
+class Rectangle {
+   int width, height;
+    public:
+        Rectangle(int x, int y) {
+            width = x;
+            height = y;
+        }    
+        //Destructor
+        ~Rectangle(){};
+        /*
+        void set_values(int x,int y) {
+            width = x;
+            height = y;
+        }
+        */
+    
+        int area() {
+            return width*height;
+        }
+};
+
+
+int main() {
+    Rectangle rect1 (3,4);
+    Rectangle rect2 (4,5);
+    cout << "Rectangle rect1 area:: " << rect1.area() << endl;
+    //pointers to classes
+    Rectangle *foo, *bar, *baz;
+    foo = &rect1;
+    bar = new Rectangle(5,6);
+    baz = new Rectangle[2] {{2,5}, {3,6}};
+    cout << "foo" << foo->area() << endl;
+    cout << "bar" << bar->area() << endl;
+    cout << "baz1" << baz->area() << endl;
+    cout << "baz2" << (baz+1)->area() << endl;
+    return 0;
+    
+}
