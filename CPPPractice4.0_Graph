@@ -1,0 +1,152 @@
+// Directed Graph and Undirected 
+struct edge {
+    int src, dest;
+};
+
+class Graph{
+    public:
+    vector<vector<int>> adjList;
+    //constructor
+    Graph(vector<edge> const& edges, int N) {
+        adjList.resize(N);
+        for (auto edge : edges) {
+            adjList[edge.src].push_back(edge.dest);
+            //For undirected Graph
+            adjList[edge.dest].push_back(edge.src);
+        }
+        
+    }
+};
+
+void printGraph(Graph const &graph, int N) {
+    for (int i = 0 ; i<N ; i++) {
+        cout << "For Node " << i << " ";
+        for (auto v: graph.adjList[i]) {
+            cout << v;
+        }
+        cout << endl;
+    }
+    /* Other way to print graph 
+    for (auto i : graph.adjList) {
+        cout << endl;
+        cout << "For Node Method 2 " ;
+        
+        for (auto j: i) {
+            cout << j;
+        }
+        cout << endl;
+        
+    }
+    */
+ 
+}
+// BFS on Undirected graph
+
+void BFS(Graph const  &graph, int N, queue<int> &q, vector<bool> &discovered) {
+    if (q.size() == 0) {
+        return;
+    }
+    int v = q.front();
+    q.pop();
+    cout << v;
+    for (auto i : graph.adjList[v]) {
+        if (discovered[i] == 0) {
+            q.push(i);
+        }
+    }
+    discovered[v] = 1;
+    BFS(graph,N,q,discovered);
+}
+
+
+void DFS (Graph const &graph,  vector<bool>& discovered, int n) {
+    if (discovered[n] == 1) {
+        return;
+    } 
+    discovered[n] = 1;
+    cout << "DFS " << n << endl;
+    for (auto i : graph.adjList[n]) {
+        if (discovered[i] != 1) {
+            DFS(graph,discovered,i);
+        }
+    }
+    
+}
+int main() {
+    std::cout << "Hello World!\n";
+    //vector<edge> edges = {{0,1}, {1,2}, {2,0}, {2,1}, {3,2}, {4,5}, {5,4}};
+    //For undirected graph
+   // vector<edge> edges = {{0,1}, {1,2}, {2,0}, {3,2}};
+    vector<edge> edges = {
+		{1, 2}, {1, 3}, {1, 4}, {2, 5}, {2, 6}, {5, 9},
+		{5, 10}, {4, 7}, {4, 8}, {7, 11}, {7, 12}
+		// vertex 0, 13 and 14 are single nodes
+	};
+
+    int N = 15;
+    //Graph graph = new Graph(edges,N);
+    Graph graph(edges,N);
+    printGraph(graph,N);
+    
+    /* BFS
+    queue<int> q;
+    q.push(1);
+    vector<bool> discovered;
+    //vector<bool> discovered(N,0);
+    for (int i =0 ;i<N; i++) {
+        discovered.push_back(0);
+    }
+    BFS(graph,N,q,discovered);
+    */
+    
+    vector<bool> discovered(N,0);
+    DFS(graph,discovered,1);
+    
+}
+
+
+/*
+// DIRECTED AND UNDIRECTED WITH WEIGHTS
+
+
+struct Edge{
+    int src, dest, weight;
+};
+
+typedef pair<int,int> Pair;
+ 
+class Graph {
+  public:
+    vector<vector<Pair>> adjList;
+    Graph (vector<Edge> const &edges, int N) {
+        adjList.resize(N);
+        for (int i =0; i < N; i++) {
+            Pair tmp = {edges[i].dest, edges[i].weight};
+            adjList[edges[i].src].push_back(tmp);
+            //Undirected Graph
+            Pair tmp1 = {edges[i].src,edges[i].weight};
+            adjList[edges[i].dest].push_back(tmp1);
+        }
+    }
+    
+};
+
+void printGraph(Graph const &graph, int N) {
+    for (int i = 0; i<N ; i++) {
+        cout << "From Node " << i;
+        for (auto v : graph.adjList[i]) {
+            cout << "{" << v.first << v.second << "}";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    vector<Edge> edges = {{0,1,10}, {0,2,12}, {1,2,11}, {2,3,13}};
+    int N = 4;
+    Graph graph(edges,N);
+    printGraph(graph,N);
+}
+
+*/
+
