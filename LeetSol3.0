@@ -1,0 +1,371 @@
+//104
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+      return helper(root);   
+    }
+    
+    int helper(TreeNode* root) {
+        if (root == NULL) {
+            return 0;
+        }
+        /*
+        if (root->left == NULL && root->right == NULL) {
+            return 1;
+        }
+        */
+        return 1+max(helper(root->left),helper(root->right));
+    }
+};
+
+//83
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == NULL or head->next == NULL) {
+            return head;
+        }
+        ListNode* curr= head;
+        ListNode* tmp = head->next;
+        
+        while (tmp) {
+            while (tmp && tmp->val == curr->val) {
+                tmp = tmp->next;
+            }
+
+            curr->next = tmp;
+            curr = tmp;
+            if (tmp != NULL) {
+                tmp = tmp->next;
+            }
+        }
+        
+        return head;
+        
+    }
+};
+
+//112
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+         bool v = helper(root,sum);
+        return v;
+        
+    }
+    
+    bool helper(TreeNode* root, int sum) {
+
+        if (root == NULL) {
+            return false;
+        }
+      // cout << root->val << endl;
+        if (root->left == NULL && root->right == NULL) {
+            if (root->val == sum) {
+                return true;
+            }
+            return false;
+        }
+
+        return helper(root->left,sum-root->val) or helper(root->right,sum-root->val);
+    }
+};
+//235
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return helper(root,p,q);
+              
+    }
+    
+    TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root->val == p-> val || root->val == q->val) {
+            return root;
+        }
+        if ((root->val - p->val) * (root->val - q->val) < 0) {
+            return root;
+        }
+        if (root->val > p->val || root->val > q-> val) {
+            return helper(root->left, p ,q);
+        } else {
+            return helper(root->right, p ,q);
+        }
+    }
+};
+
+//113
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        vector<int> temp;
+        vector<vector<int>> res;
+        helper(root, sum, res, temp);
+        return res;
+        
+        
+        
+    }
+    
+    void helper (TreeNode* root, int sum, vector<vector<int>> &res, vector<int> &tmp) {
+        if (!root) {
+            return;
+        }
+       
+        tmp.push_back(root->val);
+        /*
+        for (auto x : tmp) {
+            cout << x << endl;
+        }      
+        */
+
+        if (!root->left && !root->right && root->val == sum) {
+            res.push_back(tmp);
+            //cout << res[0];
+        }
+        helper(root->left, sum - root->val, res, tmp);
+        helper(root->right,sum - root->val, res, tmp);
+        tmp.pop_back();
+        
+
+    }
+    
+    
+};
+
+//217
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+         unordered_map<int,int> map;
+        for (auto x: nums) {
+            if (map.find(x) != map.end()) {
+                return true;
+            } else {
+                map[x] = 1;
+            }
+        }
+        return false;
+        
+    }
+};
+
+//876
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+        
+        
+    }
+};
+
+//111
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        return helper(root);   
+    }
+    
+    int helper(TreeNode* root) {
+        
+        if (root == NULL) {
+            return 0;
+        }
+        if (!root->left){
+            return (1 + helper(root->right));
+        }
+        if (!root->right){
+            return (1+ helper(root->left));
+        }
+        return (1+min(helper(root->left),helper(root->right)));
+    }
+};
+
+//653
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        unordered_set<int> setPair;
+        return helper(root,k,setPair);
+    }
+    
+    bool helper(TreeNode* root, int k, unordered_set<int> &setPair ) {
+        
+        if (!root) {
+            return false;
+        }
+        int rem = k - root->val;
+        if (setPair.find(rem) != setPair.end()) {
+            return true;
+        } else {
+            setPair.insert(root->val);
+        }
+        
+        return helper(root->left,k,setPair) or helper(root->right,k,setPair);
+        
+    }
+};
+
+//704
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        //return helper(nums,target,0,nums.size()-1);
+        int low = 0;
+        int high = nums.size() -1;
+       
+        while (low<=high) {
+            //cout << low << high << endl;
+             int mid = (low+high)/2;
+            //cout << mid;
+            if (nums[mid]  == target) {
+                return mid;
+            } else if (target> nums[mid]) {
+                low = mid+1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+    /* 
+    int helper(vector<int>& nums, int target, int low, int high) {
+        int mid = (low+high) /2 ;
+        if (low == high) {
+            if (nums[low] == target ){
+                return low;
+            } else {
+                return -1;
+            }
+        }
+        if (target == nums[mid]) {
+            return mid;
+        } else if (target > nums[mid]) {
+            return helper(nums,target,mid+1,high);
+        } else {
+           return helper(nums,target,low,mid);
+        }
+    }
+    */
+};
+
+//872
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        vector<int> v1;
+        vector<int> v2;
+        
+        helper(v1, root1);
+        helper(v2, root2);
+        
+        if (v1 == v2) {
+            return true;
+        }
+        return false;
+        
+        
+    }
+    
+    
+    void helper(vector<int> &v1, TreeNode* root) {
+        
+        if (!root) {
+            return;
+        }
+        
+        //cout << root->val;
+        if (!root->left && !root->right ) {
+            v1.push_back(root->val);
+       
+        }
+        helper(v1, root->left);
+        helper(v1, root->right);
+    }
+};
