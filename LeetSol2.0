@@ -1,0 +1,197 @@
+//733
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        if (image.size() == 0) {
+            return image;
+        }
+        int prevColor = image[sr][sc];
+        if (newColor != image[sr][sc]) {
+            helper(image,sr,sc,prevColor,newColor);
+        }
+        return image;
+    }
+    
+    void helper(vector<vector<int>> &image,int sr, int sc, int prevColor, int newColor) {
+        if (image[sr][sc] == prevColor) {
+            image[sr][sc] = newColor;
+            if (sr+1 < image.size()) {
+                helper(image,sr+1,sc,prevColor,newColor);
+            }
+            if (sc+1 < image[0].size()) {
+                helper(image,sr,sc+1,prevColor,newColor);
+            }
+            if (sr-1 >= 0) {
+                helper(image,sr-1,sc,prevColor,newColor);
+            }
+            if (sc-1 >= 0) {
+                helper(image,sr,sc-1,prevColor,newColor);
+            }
+        }
+        
+    }
+};
+
+//203
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+
+        ListNode* tmp = head;
+        ListNode dummy = ListNode(0);
+        ListNode* d = &dummy;
+        d->next = head;
+        ListNode* curr = d;
+        
+        while (tmp != NULL) {
+           //cout << tmp->val;
+            while (tmp && tmp->val == val) {
+                //cout << endl<< tmp->val<<endl;
+
+                tmp = tmp->next;
+                
+            }
+            curr->next = tmp;
+            curr = tmp;
+            if (tmp == NULL) {
+                break;
+            }
+            tmp = tmp->next;
+            
+        }
+        return d->next;
+    }
+};
+//234
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        stack<int> st;
+        ListNode* head2 = head;
+        while(head2 != NULL) {
+            st.push(head2->val);
+            head2 = head2->next;
+        }
+        
+        int count = st.size()/2;
+        //cout << count;
+        
+        while (count > 0) {
+            int v = st.top();
+            st.pop();
+            if (head->val != v) {
+                return false;
+            }
+            head= head->next;
+            count -= 1;
+        }
+        
+        return true;
+ 
+    }
+};
+
+//141
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) {
+                return true;
+            }
+            
+        }
+        return false;
+        
+    }
+};
+
+//118
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> result(numRows, vector<int>(1,1));
+        if (numRows <= 0) {
+            //return result;
+        }
+        //result.push_back(1);
+        //result[0].push_back(1);
+        for (int i =1; i< numRows ; i++) {
+            //result[i].push_back(1);
+            for (int j = 1; j < i ; j++) {
+                int v = result[i-1][j-1]+result[i-1][j];
+                result[i].push_back(v);
+            }
+            result[i].push_back(1);
+            
+        }
+        return result;
+        
+    }
+};
+
+//938
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int res = 0;
+
+    int rangeSumBST(TreeNode* root, int L, int R) {
+        return helper(root,L,R);
+    
+    }
+    
+    
+    int helper(TreeNode* root,int L, int R) {
+        //cout << "res is" << res << endl;
+        if (!root) {
+            return 0 ;
+        }
+        if (root->val >=L && root->val <= R) {
+            return root->val + helper(root->left,L,R) + helper(root->right,L,R);
+            
+        } else if (root->val <L) {
+            return helper(root->right,L,R);
+            
+        } else {
+            return helper(root->left,L,R);
+        }
+    }
+ };
